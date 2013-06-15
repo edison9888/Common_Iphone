@@ -15,6 +15,8 @@
 #import "MoreTableViewCell.h"
 #import "DownloadResource.h"
 #import "DownloadItem.h"
+#import "GADBannerView.h"
+#import "DownloadAd.h"
 
 @implementation TopDownloadController
 
@@ -23,12 +25,14 @@
 @synthesize currentSelectItem;
 @synthesize startOffset;
 @synthesize lastSelectedCell;
+@synthesize bannerView;
 
 - (void)dealloc
 {
     [toplist release];
     [currentSelectItem release];
     [lastSelectedCell release];
+    [bannerView release];
     [super dealloc];
 }
 
@@ -128,22 +132,33 @@
     [self setDownloadNavigationTitle:NSLS(@"kTopDownload")];
      
     supportRefreshHeader = YES;
-    [self setRefreshHeaderViewFrame:CGRectMake(0, 0 - self.dataTableView.bounds.size.height, 320, self.dataTableView.bounds.size.width)];
+    
     
     [self setRightBarButton];
 //    [self setNavigationRightButtonWithSystemStyle:UIBarButtonSystemItemRefresh action:@selector(clickRefresh:)];
     
     [super viewDidLoad];
     
-    [self setRefreshHeaderViewFrame:CGRectMake(0, 0-self.dataTableView.bounds.size.height, 320, self.dataTableView.bounds.size.height)];
+    [self setRefreshHeaderViewFrame:CGRectMake(0, 0 - self.dataTableView.bounds.size.height, [UIScreen mainScreen].bounds.size.width, self.dataTableView.bounds.size.width)];
     
     // Do any additional setup after loading the view from its nib.
     [self loadTopDownLoadItemFromServer:YES];
     
 }
 
+
 - (void)viewDidAppear:(BOOL)animated
 {
+    if (bannerView == nil){ 
+        bannerView = [DownloadAd allocAdMobView:self];
+        if (bannerView != nil){
+            CGRect rect = self.dataTableView.frame;
+            rect.size.height -= bannerView.frame.size.height;
+            self.dataTableView.frame = rect;
+        }
+    }
+    
+    
     if (self.dataList == nil || [dataList count] == 0){                        
         [self showActivityWithText:NSLS(@"kLoadingData")];
         [self loadTopDownLoadItemFromServer:YES];                

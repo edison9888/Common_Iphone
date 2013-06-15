@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "UIImageUtil.h"
 
+#define DOWNLOAD_UMENG_APP_KEY  @"4fbb64115270152dc300000d"
+
 #define TOP_ICON        @"tu_03-02"
 #define RESOURCE_ICON   @"png_08"
 #define BROWSE_ICON     @"png_10"
@@ -60,7 +62,7 @@
 
 //download
 #define DOWNLOAD_FILTER_BG              @"tu_22.png" 
-#define DOWNLOAD_FILTER_BG_IMAGE        ([UIImage imageNamed:DOWNLOAD_FILTER_BG])
+#define DOWNLOAD_FILTER_BG_IMAGE        ([UIImage strectchableImageName:DOWNLOAD_FILTER_BG])
 
 #define FILETER_ALL_BUTTON              @"png_107"
 #define FILETER_COMPLETE_BUTTON         @"png_108"
